@@ -1342,7 +1342,7 @@ class PhpDocParserTest extends \PHPUnit\Framework\TestCase
 					'@generic',
 					new GenericTagValueNode(
 						'',
-						new IdentifierTypeNode('T'),
+						'T',
 						'',
 						null,
 						''
@@ -1359,7 +1359,7 @@ class PhpDocParserTest extends \PHPUnit\Framework\TestCase
 					'@generic',
 					new GenericTagValueNode(
 						'in',
-						new IdentifierTypeNode('T'),
+						'T',
 						'',
 						null,
 						''
@@ -1376,7 +1376,7 @@ class PhpDocParserTest extends \PHPUnit\Framework\TestCase
 					'@generic',
 					new GenericTagValueNode(
 						'out',
-						new IdentifierTypeNode('T'),
+						'T',
 						'',
 						null,
 						''
@@ -1393,7 +1393,7 @@ class PhpDocParserTest extends \PHPUnit\Framework\TestCase
 					'@generic',
 					new GenericTagValueNode(
 						'',
-						new IdentifierTypeNode('T'),
+						'T',
 						'extends',
 						new IdentifierTypeNode('IEntity'),
 						''
@@ -1410,7 +1410,7 @@ class PhpDocParserTest extends \PHPUnit\Framework\TestCase
 					'@generic',
 					new GenericTagValueNode(
 						'',
-						new IdentifierTypeNode('T'),
+						'T',
 						'extends',
 						new IdentifierTypeNode('IEntity'),
 						'some description'

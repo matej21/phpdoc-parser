@@ -249,8 +249,8 @@ class PhpDocParser
 		} else {
 			$varianceType = '';
 		}
-
-		$type = $this->typeParser->parse($tokens);
+		$name = $tokens->currentTokenValue();
+		$tokens->consumeTokenType(Lexer::TOKEN_IDENTIFIER);
 
 		if ($tokens->tryConsumeTokenValue('extends')) {
 			$constraintType = 'extends';
@@ -266,7 +266,7 @@ class PhpDocParser
 		}
 
 		$description = $this->parseOptionalDescription($tokens);
-		return new Ast\PhpDoc\GenericTagValueNode($varianceType, $type, $constraintType, $constraint, $description);
+		return new Ast\PhpDoc\GenericTagValueNode($varianceType, $name, $constraintType, $constraint, $description);
 	}
 
 

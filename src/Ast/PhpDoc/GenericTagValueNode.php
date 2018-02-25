@@ -11,8 +11,8 @@ class GenericTagValueNode implements PhpDocTagValueNode
 	/** @var string 'in', 'out' or '' */
 	public $varianceType;
 
-	/** @var TypeNode */
-	public $type;
+	/** @var string */
+	public $name;
 
 	/** @var string 'extends', 'implements' or '' */
 	public $constraintType;
@@ -24,10 +24,10 @@ class GenericTagValueNode implements PhpDocTagValueNode
 	public $description;
 
 
-	public function __construct(string $varianceType, TypeNode $type, string $constraintType, ?TypeNode $constraint, string $description)
+	public function __construct(string $varianceType, string $name, string $constraintType, ?TypeNode $constraint, string $description)
 	{
 		$this->varianceType = $varianceType;
-		$this->type = $type;
+		$this->name = $name;
 		$this->constraintType = $constraintType;
 		$this->constraint = $constraint;
 		$this->description = $description;
@@ -37,7 +37,7 @@ class GenericTagValueNode implements PhpDocTagValueNode
 	public function __toString(): string
 	{
 		$constraint = $this->constraint ? "{$this->constraintType} {$this->constraint}" : '';
-		return trim("{$this->varianceType} {$this->type}{$constraint} {$this->description}");
+		return trim("{$this->varianceType} {$this->name}{$constraint} {$this->description}");
 	}
 
 }
