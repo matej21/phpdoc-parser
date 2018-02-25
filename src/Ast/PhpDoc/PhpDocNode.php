@@ -140,6 +140,20 @@ class PhpDocNode implements Node
 	}
 
 
+	/**
+	 * @return GenericTagValueNode[]
+	 */
+	public function getGenericTagValues(): array
+	{
+		return array_column(
+			array_filter($this->getTagsByName('@generic'), function (PhpDocTagNode $tag): bool {
+				return $tag->value instanceof GenericTagValueNode;
+			}),
+			'value'
+		);
+	}
+
+
 	public function __toString(): string
 	{
 		return "/**\n * " . implode("\n * ", $this->children) . '*/';
