@@ -154,6 +154,34 @@ class PhpDocNode implements Node
 	}
 
 
+	/**
+	 * @return InheritanceTagValueNode[]
+	 */
+	public function getExtendsTagValues(): array
+	{
+		return array_column(
+			array_filter($this->getTagsByName('@extends'), function (PhpDocTagNode $tag): bool {
+				return $tag->value instanceof InheritanceTagValueNode;
+			}),
+			'value'
+		);
+	}
+
+
+	/**
+	 * @return InheritanceTagValueNode[]
+	 */
+	public function getImplementsTagValues(): array
+	{
+		return array_column(
+			array_filter($this->getTagsByName('@implements'), function (PhpDocTagNode $tag): bool {
+				return $tag->value instanceof InheritanceTagValueNode;
+			}),
+			'value'
+		);
+	}
+
+
 	public function __toString(): string
 	{
 		return "/**\n * " . implode("\n * ", $this->children) . '*/';

@@ -113,10 +113,8 @@ class PhpDocParser
 					$tagValue = $this->parseGenericTagValue($tokens);
 					break;
 				case '@extends':
-					$tagValue = $this->parseExtendsTagValue($tokens);
-					break;
 				case '@implements':
-					$tagValue = $this->parseImplementsTagValue($tokens);
+					$tagValue = $this->parseInheritanceTagValue($tokens);
 					break;
 
 				default:
@@ -276,17 +274,10 @@ class PhpDocParser
 	}
 
 
-	private function parseExtendsTagValue(TokenIterator $tokens): Ast\PhpDoc\ExtendsTagValueNode
+	private function parseInheritanceTagValue(TokenIterator $tokens): Ast\PhpDoc\InheritanceTagValueNode
 	{
 		$type = $this->typeParser->parseGeneric($tokens);
-		return new Ast\PhpDoc\ExtendsTagValueNode($type);
-	}
-
-
-	private function parseImplementsTagValue(TokenIterator $tokens): Ast\PhpDoc\ImplementsTagValueNode
-	{
-		$type = $this->typeParser->parseGeneric($tokens);
-		return new Ast\PhpDoc\ImplementsTagValueNode($type);
+		return new Ast\PhpDoc\InheritanceTagValueNode($type);
 	}
 
 
