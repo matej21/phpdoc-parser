@@ -28,6 +28,16 @@ class TypeParser
 	}
 
 
+	public function parseGeneric(TokenIterator $tokens): Ast\Type\GenericTypeNode
+	{
+		$type = new Ast\Type\IdentifierTypeNode($tokens->currentTokenValue());
+		$tokens->consumeTokenType(Lexer::TOKEN_IDENTIFIER);
+		$type = $this->doParseGeneric($tokens, $type);
+
+		return $type;
+	}
+
+
 	private function parseAtomic(TokenIterator $tokens): Ast\Type\TypeNode
 	{
 		if ($tokens->tryConsumeTokenType(Lexer::TOKEN_OPEN_PARENTHESES)) {
@@ -46,7 +56,7 @@ class TypeParser
 			$tokens->consumeTokenType(Lexer::TOKEN_IDENTIFIER);
 
 			if ($tokens->isCurrentTokenType(Lexer::TOKEN_OPEN_ANGLE_BRACKET)) {
-				$type = $this->parseGeneric($tokens, $type);
+				$type = $this->doParseGeneric($tokens, $type);
 
 			} elseif ($tokens->isCurrentTokenType(Lexer::TOKEN_OPEN_SQUARE_BRACKET)) {
 				$type = $this->tryParseArray($tokens, $type);
@@ -89,14 +99,14 @@ class TypeParser
 		$tokens->consumeTokenType(Lexer::TOKEN_IDENTIFIER);
 
 		if ($tokens->isCurrentTokenType(Lexer::TOKEN_OPEN_ANGLE_BRACKET)) {
-			$type = $this->parseGeneric($tokens, $type);
+			$type = $this->doParseGeneric($tokens, $type);
 		}
 
 		return new Ast\Type\NullableTypeNode($type);
 	}
 
 
-	private function parseGeneric(TokenIterator $tokens, Ast\Type\IdentifierTypeNode $baseType): Ast\Type\TypeNode
+	private function doParseGeneric(TokenIterator $tokens, Ast\Type\IdentifierTypeNode $baseType): Ast\Type\GenericTypeNode
 	{
 		$tokens->consumeTokenType(Lexer::TOKEN_OPEN_ANGLE_BRACKET);
 		$genericTypes[] = $this->parse($tokens);

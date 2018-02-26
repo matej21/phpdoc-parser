@@ -112,6 +112,12 @@ class PhpDocParser
 				case '@generic':
 					$tagValue = $this->parseGenericTagValue($tokens);
 					break;
+				case '@extends':
+					$tagValue = $this->parseExtendsTagValue($tokens);
+					break;
+				case '@implements':
+					$tagValue = $this->parseImplementsTagValue($tokens);
+					break;
 
 				default:
 					$tagValue = new Ast\PhpDoc\UnknownTagValueNode($this->parseOptionalDescription($tokens));
@@ -267,6 +273,20 @@ class PhpDocParser
 
 		$description = $this->parseOptionalDescription($tokens);
 		return new Ast\PhpDoc\GenericTagValueNode($varianceType, $name, $constraintType, $constraint, $description);
+	}
+
+
+	private function parseExtendsTagValue(TokenIterator $tokens): Ast\PhpDoc\ExtendsTagValueNode
+	{
+		$type = $this->typeParser->parseGeneric($tokens);
+		return new Ast\PhpDoc\ExtendsTagValueNode($type);
+	}
+
+
+	private function parseImplementsTagValue(TokenIterator $tokens): Ast\PhpDoc\ImplementsTagValueNode
+	{
+		$type = $this->typeParser->parseGeneric($tokens);
+		return new Ast\PhpDoc\ImplementsTagValueNode($type);
 	}
 
 
